@@ -1,13 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vite Project</title>
-  <link rel="stylesheet" href="/src/styles/main.scss">
-</head>
-<body>
-  <pug src="src/pug/pages/index.pug"></pug>
-  <script type="module" src="/src/js/main.js"></script>
-</body>
+
+<!-- Здесь можно собирать все миксины-->
+<!-- include button.pug-->
+<!-- include card.pug--><!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Template</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fff">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/src/sass/main.scss">
+    <title>Default Title</title>
+  </head>
+  <body>
+    <div class="out">
+      <header>
+        <h1>This is the Header</h1>
+      </header>
+      <main>
+        <h2>Welcome to the Home Page</h2>
+        <p>This page uses layout.pug and includes header/footer</p>
+      </main>
+      <footer>
+        <p>© 2025 My Site</p>
+      </footer>
+    </div>
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
 </html>
