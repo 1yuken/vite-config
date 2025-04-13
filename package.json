@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "pug": "shx mkdir -p dist && pug src/templates/pages --out ./ --pretty",
-    "dev": "npm run pug && vite",
+    "pug:watch": "shx mkdir -p dist && pug src/templates/pages --out ./ --pretty --watch",
+    "dev": "concurrently \"npm run pug:watch\" \"vite\"",
     "build": "npm run pug && vite build"
   },
   "keywords": [],
@@ -12,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "pug-cli": "^1.0.0-alpha6",
     "sass": "^1.86.3",
     "shx": "^0.4.0",
