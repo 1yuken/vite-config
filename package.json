@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "pug": "pug src/templates/pages/index.pug src/templates/pages/about.pug src/templates/pages/contact.pug --out . --pretty",
+    "pug": "shx mkdir -p dist && pug src/templates/pages --out ./ --pretty",
     "dev": "npm run pug && vite",
     "build": "npm run pug && vite build"
   },
@@ -14,14 +14,8 @@
   "devDependencies": {
     "pug-cli": "^1.0.0-alpha6",
     "sass": "^1.86.3",
+    "shx": "^0.4.0",
     "vite": "^6.2.6",
     "vite-plugin-pug": "^0.4.1"
   }
 }
-// УДАЛИТЬ ПРИ ЗАПУСКЕ
-
-// вот здесь проблема, то что надо указывать страницы все которые есть, потому что проблемы с использованием wildcard (*) в пути
-// ещё проблема в том что в браузере чтобы переключиться на другую страницу надо вместо например about.pug -> about.html
-// пытаюсь сделать title для каждой страницы разный, пока в процессе
-// + осталось подключить babel, eslint, prettier и остальные зависимости
-// а так в целом все работает вроде бы :)
