@@ -1,0 +1,22 @@
+{
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-env"]
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "jquery": true,
+    "es2021": true
+  },
+  "plugins": ["dollar-sign"],
+  "extends": ["airbnb-base", "prettier"],
+  "rules": {
+    "dollar-sign/dollar-sign": [2, "ignoreProperties"],
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "no-unused-vars": 1
+  }
+}
