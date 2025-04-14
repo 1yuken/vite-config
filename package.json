@@ -3,19 +3,29 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "pug": "shx mkdir -p dist && pug src/templates/pages --out ./ --pretty",
-    "pug:watch": "shx mkdir -p dist && pug src/templates/pages --out ./ --pretty --watch",
-    "dev": "concurrently \"npm run pug:watch\" \"vite\"",
-    "build": "npm run pug && vite build"
+    "pug": "shx mkdir -p dist && pug src/templates/pages --out dist --pretty",
+    "pug:watch": "shx mkdir -p dist && pug src/templates/pages --out dist --pretty --watch",
+    "js:build": "shx mkdir -p dist/js && babel src/js --out-dir dist/js --source-maps",
+    "js:watch": "shx mkdir -p dist/js && babel src/js --out-dir dist/js --source-maps --watch",
+    "styles:build": "shx mkdir -p dist/css && sass src/sass/main.sass:dist/css/main.css",
+    "styles:watch": "shx mkdir -p dist/css && sass src/sass/main.sass:dist/css/main.css --watch",
+    "copy:fonts": "shx cp -R src/fonts dist/fonts",
+    "copy:fonts:watch": "chokidar 'src/fonts/**/*' -c 'shx cp -R src/fonts dist/fonts'",
+    "copy:img": "shx cp -R src/img dist/img",
+    "copy:img:watch": "chokidar 'src/img/**/*' -c 'shx cp -R src/img dist/img'",
+    "dev": "concurrently \"npm run pug:watch\" \"npm run js:watch\" \"npm run styles:watch\" \"npm run copy:fonts:watch\" \"npm run copy:img:watch\" \"vite\"",
+    "build": "npm run pug && npm run js:build && npm run styles:build && npm run copy:fonts && npm run copy:img && vite build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@babel/cli": "^7.27.0",
     "@babel/core": "^7.26.10",
     "@babel/eslint-parser": "^7.27.0",
     "@babel/preset-env": "^7.26.9",
+    "chokidar-cli": "^3.0.0",
     "concurrently": "^9.1.2",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -33,12 +43,22 @@
     "vite-plugin-pug": "^0.4.1"
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "prettier --write"],
-    "*.pug": ["pug --pretty"]
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.pug": [
+      "pug --pretty"
+    ]
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "postcss-cli": "^11.0.1"
   }
 }

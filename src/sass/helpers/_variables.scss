@@ -1,0 +1,28 @@
+// breakpoints
+$phone-s: 365;
+$phone-m: 413;
+$phone: 575;
+$tablet: 767;
+$desktop: 1024;
+$desktop-s: 1270;
+
+// fonts
+$font-main: "Gilroy", sans-serif;
+
+$max-width: 1180px;
+
+:root {
+  --black: #020203;
+  --white: #ffffff;
+
+  --primary: #4587A7;
+  --primary-500: #336781;
+  --primary-light: #E8EFF2;
+  --secondary: #333330;
+
+  --gray: #E8EFF2;
+  --gray-200: #DEDEDE;
+  --gray-100: #F6F6F6;
+}
+
+$primary-500: #336781;

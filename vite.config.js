@@ -1,8 +1,8 @@
 import { defineConfig } from "vite";
 import pugPlugin from "vite-plugin-pug";
-import path from "path";
+// import path from "path";
 
-import babel from 'vite-plugin-babel'
+import babel from "vite-plugin-babel";
 
 export default defineConfig({
   plugins: [
@@ -13,15 +13,10 @@ export default defineConfig({
       },
     }),
   ],
-  root: "./",
+  root: "dist",
   build: {
-    rollupOptions: {
-      input: {
-        main: path.resolve(__dirname, "index.pug"), // 👈 точка входа — прямо index.pug
-      },
-    },
     outDir: "dist",
-    emptyOutDir: true,
+    emptyOutDir: false, // чтобы Pug не перетирался Vite'ом
   },
   server: {
     open: "/index.pug", // 👈 откроет Pug как HTML
