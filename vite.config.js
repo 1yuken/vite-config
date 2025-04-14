@@ -16,9 +16,9 @@ export default defineConfig({
   root: "dist",
   build: {
     outDir: "dist",
-    emptyOutDir: false, // чтобы Pug не перетирался Vite'ом
+    emptyOutDir: false,
   },
   server: {
-    open: "/index.pug", // 👈 откроет Pug как HTML
+    // open: "/example.html",
   },
 });

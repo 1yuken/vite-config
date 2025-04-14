@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "pug:compile": "pug src/templates/pages --out dist --pretty",
-    "js:compile": "babel src/js --out-dir dist/js --source-maps",
+    "js:compile": "babel src/js --out-file dist/js/main.js --source-maps",
     "sass:compile": "sass src/sass/main.sass:dist/css/main.css",
     "mkdir:dist": "shx mkdir -p dist && shx mkdir -p dist/js && shx mkdir -p dist/css",
     "pug": "npm run mkdir:dist && npm run pug:compile",
@@ -13,7 +13,7 @@
     "copy:fonts": "shx cp -R src/fonts dist/fonts",
     "copy:img": "shx cp -R src/img/* dist/img",
     "watch:pug": "npm run pug && pug src/templates/pages --out dist --pretty --watch",
-    "watch:js": "npm run js:build && babel src/js --out-dir dist/js --source-maps --watch",
+    "watch:js": "npm run js:build && babel src/js --out-file dist/js/main.js --source-maps --watch",
     "watch:styles": "npm run styles:build && sass src/sass/main.sass:dist/css/main.css --watch",
     "watch:fonts": "chokidar 'src/fonts/**/*' -c 'npm run copy:fonts'",
     "watch:img": "chokidar \"src/img/**/*\" -c \"npm run copy:img\" --initial",

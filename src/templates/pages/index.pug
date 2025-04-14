@@ -1,8 +1,13 @@
 extends ../layouts/_layout.pug
 
+block title
+  title Все страницы
+
 block content
   main
-    h2 Welcome to the Home Page2212
-    svg.icon-facebook
-      use(xlink:href="/sprite.svg#facebook")
-    p This page uses layout.pug and includes header/footer
+    h2 Страницы сайта
+    ul
+      li: a(href="index.html") Главная
+      li: a(href="about.html") О нас
+      li: a(href="contact.html") Контакты
+      li: a(href="example.html") Пример
