@@ -9,12 +9,13 @@
     "mkdir:dist": "shx mkdir -p dist && shx mkdir -p dist/js && shx mkdir -p dist/css",
     "pug": "npm run mkdir:dist && npm run pug:compile",
     "js:build": "npm run mkdir:dist && npm run js:compile",
-    "styles:build": "npm run mkdir:dist && npm run sass:compile",
+    "postcss:process": "postcss dist/css/main.css -o dist/css/main.css",
+    "styles:build": "npm run mkdir:dist && npm run sass:compile && npm run postcss:process",
     "copy:fonts": "shx cp -R src/fonts dist/fonts",
     "copy:img": "shx cp -R src/img/* dist/img",
     "watch:pug": "npm run pug && pug src/templates/pages --out dist --pretty --watch",
     "watch:js": "npm run js:build && babel src/js --out-file dist/js/main.js --source-maps --watch",
-    "watch:styles": "npm run styles:build && sass src/sass/main.sass:dist/css/main.css --watch",
+    "watch:styles": "sass --watch src/sass/main.sass:dist/css/main.css --style=expanded --no-source-map | postcss dist/css/main.css -o dist/css/main.css --watch",
     "watch:fonts": "chokidar 'src/fonts/**/*' -c 'npm run copy:fonts'",
     "watch:img": "chokidar \"src/img/**/*\" -c \"npm run copy:img\" --initial",
     "sprite": "node vite/svg-sprite.js",
@@ -67,5 +68,10 @@
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.3",
     "postcss-cli": "^11.0.1"
-  }
+  },
+  "browserslist": [
+    "last 4 versions",
+    "> 1%",
+    "ie 11"
+  ]
 }
