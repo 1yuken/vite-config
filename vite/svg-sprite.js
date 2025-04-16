@@ -1,5 +1,5 @@
 import svgSprite from 'svg-sprite';
-import { readdirSync, readFileSync, writeFileSync } from 'fs';
+import { readdirSync, readFileSync, writeFileSync, mkdirSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -42,6 +42,11 @@ sprite.compile((error, result) => {
   if (error) throw error;
 
   const spriteContent = result.symbol.sprite.contents;
-  writeFileSync(path.resolve(__dirname, '../dist/sprite.svg'), spriteContent);
-  console.log('✅ SVG спрайт успешно сгенерирован!');
+  const outputPath = path.resolve(__dirname, '../dist/img/sprite.svg');
+  
+  // Создаём папку, если её нет
+  mkdirSync(path.resolve(__dirname, '../dist/img'), { recursive: true });
+  
+  writeFileSync(outputPath, spriteContent);
+  console.log('✅ SVG спрайт успешно сгенерирован в dist/img/sprite.svg!');
 });
