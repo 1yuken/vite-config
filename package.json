@@ -3,26 +3,29 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "clean:dist": "shx rm -rf dist/*",
     "pug:compile": "pug src/templates/pages --out dist --pretty",
-    "js:compile": "babel src/js --out-file dist/js/main.js --source-maps",
-    "sass:compile": "sass src/sass/main.sass:dist/css/main.css",
-    "mkdir:dist": "shx mkdir -p dist && shx mkdir -p dist/js && shx mkdir -p dist/css",
+    "js:compile": "babel src/js/lib/app.js src/js/main.js --out-file dist/js/main.js",
+    "js:minify": "terser dist/js/main.js -c drop_debugger=true -m -o dist/js/main.js",
+    "js:build": "npm run js:compile && npm run js:minify",
+    "sass:compile": "sass src/sass/main.sass:dist/css/main.css --style=expanded --no-source-map --update",
+    "postcss:process": "postcss dist/css/main.css --replace --verbose",
+    "mkdir:dist": "shx mkdir -p dist/{js,css,img,fonts}",
     "mkdir:img": "shx mkdir -p dist/img",
     "pug": "npm run mkdir:dist && npm run pug:compile",
-    "js:build": "npm run mkdir:dist && npm run js:compile && npm run js:minify",
-    "js:minify": "terser dist/js/main.js -o dist/js/main.min.js --source-map",
-    "postcss:process": "postcss dist/css/main.css -o dist/css/main.css",
-    "styles:build": "npm run mkdir:dist && npm run sass:compile && npm run postcss:process",
+    "styles:build": "npm run sass:compile && npm run postcss:process",
     "copy:fonts": "shx cp -R src/fonts dist/fonts",
-    "copy:img": "npm run mkdir:img && shx cp -R src/img/. dist/img",
-    "watch:pug": "npm run pug && pug src/templates/pages --out dist --pretty --watch",
-    "watch:js": "npm run js:build && babel src/js --out-file dist/js/main.js --source-maps --watch",
-    "watch:styles": "sass --watch src/sass/main.sass:dist/css/main.css --style=expanded --no-source-map | postcss dist/css/main.css -o dist/css/main.css --watch",
+    "copy:img": "shx cp -R src/img/. dist/img",
+    "watch:pug": "chokidar \"src/templates/**/*.pug\" -c \"npm run pug:compile\" --initial --verbose --unlink",
+    "watch:js": "chokidar \"src/js/**/*.js\" -c \"npm run js:build\"",
+    "watch:styles": "chokidar \"src/sass/**/*.{sass,scss}\" -c \"npm run styles:build\" --polling=false --atomic --ignoreInitial",
     "watch:fonts": "chokidar 'src/fonts/**/*' -c 'npm run copy:fonts'",
-    "watch:img": "chokidar \"src/img/**/*\" -c \"npm run copy:img\" --initial",
+    "watch:img": "chokidar \"src/img/**/*\" -c \"npm run copy:img\" --initial --ignoreInitial=false --atomic",
     "sprite": "node vite/svg-sprite.js",
     "watch:sprite": "chokidar 'src/icons/**/*.svg' -c 'npm run sprite'",
-    "dev": "npm run sprite && concurrently \"npm run watch:sprite\" \"npm run watch:pug\" \"npm run watch:js\" \"npm run watch:styles\" \"npm run watch:fonts\" \"npm run watch:img\" \"vite\"",
+    "predev": "npm run clean:dist && npm run mkdir:dist",
+    "prebuild": "npm run clean:dist && npm run mkdir:dist",
+    "dev": "npm run sprite && npm run copy:fonts && npm run js:build && npm run styles:build && concurrently \"npm run watch:sprite\" \"npm run watch:pug\" \"npm run watch:js\" \"npm run watch:styles\" \"npm run watch:fonts\" \"npm run watch:img\" \"vite\"",
     "build": "npm run sprite && npm run pug && npm run js:build && npm run styles:build && npm run copy:fonts && npm run copy:img && vite build"
   },
   "keywords": [],
@@ -32,11 +35,13 @@
   "devDependencies": {
     "@babel/cli": "^7.27.0",
     "@babel/core": "^7.26.10",
-    "@babel/eslint-parser": "^7.27.0",
     "@babel/preset-env": "^7.26.9",
+    "autoprefixer": "^10.4.21",
     "chokidar-cli": "^3.0.0",
+    "concat": "^1.0.3",
     "concurrently": "^9.1.2",
-    "cssnano": "^7.0.6",
+    "core-js": "^3.41.0",
+    "cssnano": "^6.1.2",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^10.1.2",
@@ -45,7 +50,10 @@
     "eslint-plugin-prettier": "^5.2.6",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.1",
+    "postcss": "^8.5.3",
+    "postcss-cli": "^11.0.1",
     "pug-cli": "^1.0.0-alpha6",
+    "rollup": "^4.40.0",
     "sass": "^1.86.3",
     "shx": "^0.4.0",
     "svg-sprite": "^2.0.4",
@@ -68,14 +76,12 @@
       "pre-commit": "lint-staged"
     }
   },
-  "dependencies": {
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.3",
-    "postcss-cli": "^11.0.1"
-  },
   "browserslist": [
     "last 4 versions",
     "> 1%",
     "ie 11"
-  ]
+  ],
+  "dependencies": {
+    "jquery": "^3.7.1"
+  }
 }

@@ -1,3 +1,7 @@
-// import "./lib/app";
+import $ from 'jquery';
+window.$ = window.jQuery = $;
 
-console.log('Привет!')
+$(document).ready(function() {
+  $('.out').css('background-color', '#f0f0f0');
+  console.log('jQuery version:', $.fn.jquery);
+});
